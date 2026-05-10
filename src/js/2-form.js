@@ -5,12 +5,15 @@ const form = document.querySelector('.feedback-form');
 if (form) {
   form.addEventListener('input', onInput);
   form.addEventListener('submit', onSubmit);
-  formData = JSON.parse(localStorage.getItem(KEY)) || {
-    email: '',
-    message: '',
-  };
-  form.elements.email.value = formData.email;
-  form.elements.message.value = formData.message;
+  let formData;
+  try {
+    formData = JSON.parse(localStorage.getItem(KEY));
+  } catch {
+    return;
+  }
+  if (!formData) return;
+  form.elements.email.value = formData.email || '';
+  form.elements.message.value = formData.message || '';
 }
 
 function onInput(event) {
