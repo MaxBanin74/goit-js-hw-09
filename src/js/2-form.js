@@ -9,11 +9,12 @@ if (form) {
   try {
     formData = JSON.parse(localStorage.getItem(KEY));
   } catch {
-    return;
+    formData = null;
   }
-  if (!formData) return;
-  form.elements.email.value = formData.email || '';
-  form.elements.message.value = formData.message || '';
+  if (formData) {
+    form.elements.email.value = formData.email || '';
+    form.elements.message.value = formData.message || '';
+  }
 }
 
 function onInput(event) {
