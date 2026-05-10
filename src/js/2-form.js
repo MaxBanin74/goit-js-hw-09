@@ -5,16 +5,13 @@ const form = document.querySelector('.feedback-form');
 if (form) {
   form.addEventListener('input', onInput);
   form.addEventListener('submit', onSubmit);
-  let formData;
   try {
-    formData = JSON.parse(localStorage.getItem(KEY));
+    formData = JSON.parse(localStorage.getItem(KEY)) || formData;
   } catch {
-    formData = null;
+    formData = { email: '', message: '' };
   }
-  if (formData) {
-    form.elements.email.value = formData.email || '';
-    form.elements.message.value = formData.message || '';
-  }
+  form.elements.email.value = formData.email || '';
+  form.elements.message.value = formData.message || '';
 }
 
 function onInput(event) {
@@ -31,7 +28,6 @@ function onSubmit(event) {
   }
   console.log(formData);
   localStorage.removeItem(KEY);
-  formData.email = '';
-  formData.message = '';
-  if (form) form.reset();
+  formData = { email: '', message: '' };
+  form.reset();
 }
